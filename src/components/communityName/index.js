@@ -6,12 +6,9 @@ class MainRender extends Component {
   constructor() {
     super();
     this.state = {
-      priceInfo:[1,2,2,2,2,]
     };
   }
-  callbackFunction = (childData) => {
-    this.setState({info: childData})
-  }
+  
   render() {
     return (
       <div>
