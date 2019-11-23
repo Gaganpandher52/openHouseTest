@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './CommunityNames.css'
 
 class CommunityInfo extends Component {
   constructor(){
@@ -7,35 +8,35 @@ class CommunityInfo extends Component {
       error:null,
       isLoaded:false,
       info : []
-
     }
   }
-  getName = () => {
-    fetch('/https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities')
-    .then(res => res.json())
-    .then(info => this.setState({ info }));
-
-  }
-
   componentDidMount(){
     fetch('https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities')
     .then(res => res.json())
     .then((result) => {
       this.setState({
         isLoaded:true,
-        info: result
+        //.sort function sorts aplabatically
+        info: result.sort(function(a,b){
+          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if(nameA < nameB){
+            return -1 
+          }if(nameA < nameB){
+            return 1
+          }
+          return 0
+          
+        })
       });
     },
     //handle error here
     (error) => {
       this.setState({
         isLoaded: true,
-        error
+        error:1,
       });
     });
   }
-
-
 
   render() {
     const {error, isLoaded, info} = this.state;
@@ -45,17 +46,15 @@ class CommunityInfo extends Component {
       return <div>Loading...</div>
     } else{
       return (
-        <ul>
+        <p className='name-items'>
           {info.map(name => (
-            <li key={info.name}>
-              {name.name} 
-            </li>
+            <p key={name}>
+              {name.name} {<img className src={name.imgUrl}></img>}
+            </p>
           ))}
-        </ul>
-      );
-      
+        </p>
+      ); 
     }
-    
   }
 }
 
