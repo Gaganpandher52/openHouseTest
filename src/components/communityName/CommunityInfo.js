@@ -57,28 +57,21 @@ class CommunityInfo extends Component {
     const { error, isLoaded, info, priceInfo } = this.state;
 
     if (error) {
-      return <div> Error: {error.message} </div>;
+      return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div> Loading... </div>;
+      return <div>Loading...</div>;
     } else {
       return (
         <p className="name-items">
-          {" "}
           {info.map(name => (
             <p key={name}>
-              {" "}
-              {name.name}{" "}
-              {
-                <img className src={name.imgUrl}>
-                  {" "}
-                </img>
-              }{" "}
+              {name.name} {<img className src={name.imgUrl}></img>}
             </p>
-          ))}{" "}
+          ))}
         </p>
       );
     } //else
-    return <div> {this.logicMethod()} </div>;
+    return <div>{this.logicMethod()}</div>;
   } //render
 } //component
 
