@@ -1,0 +1,18 @@
+.nav-bar-header{
+  height: 20px;
+  border-radius: 5px;
+  background-color: grey;
+}
+.nav-bar-header h4{
+  display: inline;
+  margin-left: 5px;
+} 
+/* if biggerthan 425 do this */
+@media (min-width:430px){
+  .nav-bar-header{
+    /* background-color: red; */
+    height: 30px;
+    font-size: 25px;
+
+  }
+}
