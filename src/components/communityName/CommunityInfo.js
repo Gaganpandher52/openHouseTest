@@ -1,59 +1,67 @@
-import React, { Component } from 'react';
-import './CommunityNames.css'
+import React, { Component } from "react";
+import "./CommunityNames.css";
+import AvgPrice from './AvgPrice'
 
 class CommunityInfo extends Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.state = {
-      error:null,
-      isLoaded:false,
-      info : []
-    }
+      error: null,
+      isLoaded: false,
+      info: [], //stores the fetch call
+      priceInfo:[] //stores price info from fetch call
+    };
   }
-  componentDidMount(){
-    fetch('https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities')
-    .then(res => res.json())
-    .then((result) => {
-      this.setState({
-        isLoaded:true,
-        //.sort function sorts aplabatically
-        info: result.sort(function(a,b){
-          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
-          if(nameA < nameB){
-            return -1 
-          }if(nameA < nameB){
-            return 1
-          }
-          return 0
-          
-        })
-      });
-    },
-    //handle error here
-    (error) => {
-      this.setState({
-        isLoaded: true,
-        error:1,
-      });
-    });
+  componentDidMount() {
+    fetch(
+      "https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities"
+    )
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            isLoaded: true,
+            //.sort function sorts alphabatically
+            info: result.sort(function(a, b) {
+              let nameA = a.name.toLowerCase(),
+                nameB = b.name.toLowerCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA < nameB) {
+                return 1;
+              }
+              return 0;
+            })
+          });
+        },
+
+        //handle error here
+        error => {
+          this.setState({
+            isLoaded: true,
+            error: 1
+          });
+        }
+      );
   }
 
   render() {
-    const {error, isLoaded, info} = this.state;
-    if(error){
-      return <div>Error: {error.message}</div>
-    } else if(!isLoaded){
-      return <div>Loading...</div>
-    } else{
+    const { error, isLoaded, info } = this.state;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
       return (
-        <p className='name-items'>
+        <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              {name.name} {<img className src={name.imgUrl}></img>}
+              {name.name} {<img className src={name.imgUrl}></img>}{<AvgPrice/>}
             </p>
           ))}
         </p>
-      ); 
+      );
     }
   }
 }
