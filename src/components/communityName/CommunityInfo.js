@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./CommunityNames.css";
-import AvgPrice from './AvgPrice'
+import axios from "axios";
 
 class CommunityInfo extends Component {
   constructor() {
@@ -9,45 +9,42 @@ class CommunityInfo extends Component {
       error: null,
       isLoaded: false,
       info: [], //stores the fetch call
-      priceInfo:[] //stores price info from fetch call
+      priceInfo: [] //stores price info from fetch call
     };
   }
-  componentDidMount() {
-    fetch(
-      "https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities"
-    )
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            //.sort function sorts alphabatically
-            info: result.sort(function(a, b) {
-              let nameA = a.name.toLowerCase(),
-                nameB = b.name.toLowerCase();
-              if (nameA < nameB) {
-                return -1;
-              }
-              if (nameA < nameB) {
-                return 1;
-              }
-              return 0;
-            })
-          });
-        },
 
-        //handle error here
-        error => {
-          this.setState({
-            isLoaded: true,
-            error: 1
-          });
-        }
-      );
+  componentDidMount() {
+    Promise.all([
+      axios.get(
+        "https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities"
+      ),
+      axios.get(
+        "https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/homes"
+      )
+    ])
+      .then(([name, prices]) => {
+        this.setState({
+          isLoaded: true,
+          priceInfo: prices.data,
+          //.sort method sorts the data Alphabatically
+          info: name.data.sort(function(a, b) {
+            let nameA = a.name.toLowerCase(),
+              nameB = b.name.toLowerCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA < nameB) {
+              return 1;
+            }
+            return 0;
+          })
+        });
+      });
   }
 
   render() {
-    const { error, isLoaded, info } = this.state;
+    const AvgPriceInfo = this.props.inComing;
+    const { error, isLoaded, info, priceInfo } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -57,7 +54,7 @@ class CommunityInfo extends Component {
         <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              {name.name} {<img className src={name.imgUrl}></img>}{<AvgPrice/>}
+              {name.name} {<img className src={name.imgUrl}></img>}
             </p>
           ))}
         </p>
