@@ -88,16 +88,12 @@ class CommunityInfo extends Component {
       return (
         <p className="name-items">
           {info.map(name => (
-            // priceInfo.map(price => (
-            // <p key={price}>
-            // {price.price}
-            // </p>
             <p key={name}>
               {name.name}: Average House Price :{this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
-              {/* {price.price} */}
+
             </p>
-            // ))//nested map
+           
           ))}
         </p>
       );
