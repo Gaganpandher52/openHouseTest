@@ -52,31 +52,31 @@ class CommunityInfo extends Component {
 
   /* this method is all the logic behind the returning specific average price based on community id
   this method has a param incoming(which is id from logic method to compare to the array of objects(called initialState)*/
-  returnSpecificPrice(incoming){
+  returnSpecificPrice(incoming) {
     const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
     let initialState = [];
     let prices = [];
-    
-    info.forEach(e1 =>
-      priceInfo.forEach(e2 => {
-        if (e1.id === e2.communityId) {
-          initialState.push({
-            id: e1.id,
-            price: e2.price
-          });
-        }//if
-      })//nested
-    )//forEach
-    
+
+    info.forEach(
+      e1 =>
+        priceInfo.forEach(e2 => {
+          if (e1.id === e2.communityId) {
+            initialState.push({
+              id: e1.id,
+              price: e2.price
+            });
+          } //if
+        }) //nested
+    ); //forEach
+
     //this forEach compare the incoming id with stored in initial State
-    initialState.forEach(i=>{
-      if(incoming === i.id){
-            prices.push(i.price)
-          }
-        });
-        // return total of 
-        return (prices.reduce((a, b) => a + b, 0)/ prices.length).toFixed(0);
-        
+    initialState.forEach(i => {
+      if (incoming === i.id) {
+        prices.push(i.price);
+      }
+    });
+    // return total of
+    return (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(0);
   }
 
   /*This LogicMethod does the heavy lifting.. from some if logic to returning name images and avg price  */
@@ -91,7 +91,8 @@ class CommunityInfo extends Component {
         <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              {name.name}: Average House Price :{this.returnSpecificPrice(name.id)}
+              {name.name}: Average House Price :
+              {this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
             </p>
           ))}
