@@ -5,16 +5,24 @@ import axios from "axios";
 class CommunityInfo extends Component {
   constructor() {
     super();
+    //intitial state 
     this.state = {
       error: null,
       isLoaded: false,
       info: [], //stores the fetch call
       priceInfo: [], //stores price info from fetch call,
-      avgPrice: [] //stores the average price with community id
+      avgPrice: [
+        {
+          id: "",
+          avgSpecific: [] //the goal is to save the house prices with same id.
+        }
+      ] //stores the average price with community id
     };
-  }
+  } //constructor
 
+  /*This componentdidmount handles the api endpoints and also set the state to the incoming data*/
   componentDidMount() {
+    //fetches multiple api endpoints at once.
     Promise.all([
       axios.get(
         "https://a18fda49-215e-47d1-9dc6-c6136a04a33a.mock.pstmn.io/communities"
@@ -42,35 +50,87 @@ class CommunityInfo extends Component {
     });
   } //componentDidMount
 
+
+   /*This LogicMethod */
   logicMethod() {
-    const { info, priceInfo, avgPrice } = this.state;
-    for (let i in info) {
-      for (let j in priceInfo) {
-        if (info[i]["id"] === priceInfo[j]["communityId"]) {
-        }
-      }
-    }
-    // console.log(avgPrice)
+    const { info, priceInfo, avgPrice,error,isLoaded } = this.state;
+    let initialState = [];
+    // for (let i in info) {
+    //   for (let j in priceInfo) {
+    //     if (info[i]["id"] === priceInfo[j]["communityId"]) {
+    //     }
+    //   }
+    // }
+    //this piece of code compare the state data and pushes it to an array 
+    info.forEach(e1 =>
+      priceInfo.forEach(e2 => {
+        if (e1.id === e2.communityId) {
+          initialState.push({
+            id: e1.id,
+            price: [e2.price]
+          });
+        } //if
+      })
+    );
+    // for(let i=0;i<initialState.length;i++){
+    //   if(initialState[i]['id'] === initialState[i+1][id]){
+    //     initialState[i][price] += [initialState[i+1]]
+
+    //   }
+    // }
+    if (error) {
+        return <div>Error: {error.message}</div>;
+      } else if (!isLoaded) {
+        return <div>Loading...</div>;
+      } else {
+        return (
+          <p className="name-items">
+            {info.map(name => (
+              // priceInfo.map(price => (
+                // <p key={price}>
+                  // {price.price}
+                // </p>
+              <p key={name}>
+                {name.name}
+                {<img className src={name.imgUrl}></img>}
+                {/* {price.price} */}
+  
+              </p>
+            // ))//nested map
+            ))}
+          </p>
+        );
+      } //else
+
+    console.log(initialState);
   }
 
   render() {
     const { error, isLoaded, info, priceInfo } = this.state;
 
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <p className="name-items">
-          {info.map(name => (
-            <p key={name}>
-              {name.name} {<img className src={name.imgUrl}></img>}
-            </p>
-          ))}
-        </p>
-      );
-    } //else
+    // if (error) {
+    //   return <div>Error: {error.message}</div>;
+    // } else if (!isLoaded) {
+    //   return <div>Loading...</div>;
+    // } else {
+    //   return (
+    //     <p className="name-items">
+    //       {info.map(name => (
+    //         // priceInfo.map(price => (
+    //           // <p key={price}>
+    //             // {price.price}
+    //           // </p>
+    //         <p key={name}>
+    //           {name.name}
+    //           {<img className src={name.imgUrl}></img>}
+    //           {/* {price.price} */}
+
+    //         </p>
+    //       // ))//nested map
+    //       ))}
+    //     </p>
+    //   );
+    // } //else
     return <div>{this.logicMethod()}</div>;
   } //render
 } //component
