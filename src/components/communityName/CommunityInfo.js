@@ -5,18 +5,12 @@ import axios from "axios";
 class CommunityInfo extends Component {
   constructor() {
     super();
-    //intitial state
+    //initial state
     this.state = {
       error: null,
       isLoaded: false,
       info: [], //stores the fetch call
       priceInfo: [], //stores price info from fetch call,
-      avgPrice: [
-        {
-          id: "",
-          avgSpecific: [] //the goal is to save the house prices with same id.
-        }
-      ] //stores the average price with community id
     };
   } //constructor
 
@@ -53,7 +47,7 @@ class CommunityInfo extends Component {
   /* this method is all the logic behind the returning specific average price based on community id
   this method has a param incoming(which is id from logic method to compare to the array of objects(called initialState)*/
   returnSpecificPrice(incoming) {
-    const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
+    const { info, priceInfo,error, isLoaded } = this.state;
     let initialState = [];
     let prices = [];
 
@@ -81,13 +75,14 @@ class CommunityInfo extends Component {
 
   /*This LogicMethod does the heavy lifting.. from some if logic to returning name images and avg price  */
   logicMethod() {
-    const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
+    const { info, error, isLoaded } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
+        
         <p className="name-items">
           {info.map(name => (
             <p key={name}>

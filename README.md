@@ -9,6 +9,8 @@ Simple React app to display Communities around Calgary Area and follwing info.
 
 ### Deployed
   You can check it on the deployed link https://openhouse-test.herokuapp.com/
+  or 
+  clone/fork and npm install and npm start
 
 ### Dependencies
 
