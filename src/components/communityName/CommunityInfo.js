@@ -50,11 +50,12 @@ class CommunityInfo extends Component {
     });
   } //componentDidMount
 
+  /* this method is all the logic behind the returning specific average price based on community id
+  this method has a param incoming(which is id from logic method to compare to the array of objects(called initialState)*/
   returnSpecificPrice(incoming){
     const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
     let initialState = [];
     let prices = [];
-    // let test = [12,23,123]
     
     info.forEach(e1 =>
       priceInfo.forEach(e2 => {
@@ -63,9 +64,10 @@ class CommunityInfo extends Component {
             id: e1.id,
             price: e2.price
           });
-        } //if
-      })
-    );
+        }//if
+      })//nested
+    )//forEach
+    
     //this forEach compare the incoming id with stored in initial State
     initialState.forEach(i=>{
       if(incoming === i.id){
