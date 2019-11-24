@@ -91,7 +91,7 @@ class CommunityInfo extends Component {
         <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              {name.name}: Average House Price : 
+              <u>{name.name}</u>: Average House Price:$ 
               {this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
             </p>
@@ -102,7 +102,6 @@ class CommunityInfo extends Component {
   }
 
   render() {
-    const { error, isLoaded, info, priceInfo } = this.state;
     return <div>{this.logicMethod()}</div>;
   } //render
 } //component
