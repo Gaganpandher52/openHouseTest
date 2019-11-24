@@ -70,7 +70,10 @@ class CommunityInfo extends Component {
       }
     });
     /* return the price. Uses reduce to sum the array and tofixed and else for easy readability*/
-    return (prices.reduce((a, b) => a + b, 0) / prices.length)
+    if(prices.length ===0){
+      return '*coming soon'
+    }
+    return '$'+(prices.reduce((a, b) => a + b, 0) / prices.length)
       .toFixed(0)
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -89,7 +92,7 @@ class CommunityInfo extends Component {
         <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              <u>{name.name}</u>: Average House Price:$
+              <u>{name.name}</u>: Average House Price:
               {this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
             </p>
