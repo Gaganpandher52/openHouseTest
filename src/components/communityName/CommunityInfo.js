@@ -53,48 +53,33 @@ class CommunityInfo extends Component {
   returnSpecificPrice(incoming){
     const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
     let initialState = [];
+    let prices = [];
+    // let test = [12,23,123]
+    
     info.forEach(e1 =>
       priceInfo.forEach(e2 => {
         if (e1.id === e2.communityId) {
           initialState.push({
             id: e1.id,
-            price: [e2.price]
+            price: e2.price
           });
         } //if
       })
     );
-
-    
-
+    //this forEach compare the incoming id with stored in initial State
+    initialState.forEach(i=>{
+      if(incoming === i.id){
+            prices.push(i.price)
+          }
+        });
+        // return total of 
+        return (prices.reduce((a, b) => a + b, 0)/ prices.length).toFixed(0);
+        
   }
 
   /*This LogicMethod */
   logicMethod() {
     const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
-    // let initialState = [];
-    // // for (let i in info) {
-    // //   for (let j in priceInfo) {
-    // //     if (info[i]["id"] === priceInfo[j]["communityId"]) {
-    // //     }
-    // //   }
-    // // }
-    // //this piece of code compare the state data and pushes it to an array
-    // info.forEach(e1 =>
-    //   priceInfo.forEach(e2 => {
-    //     if (e1.id === e2.communityId) {
-    //       initialState.push({
-    //         id: e1.id,
-    //         price: [e2.price]
-    //       });
-    //     } //if
-    //   })
-    // );
-    // for(let i=0;i<initialState.length;i++){
-    //   if(initialState[i]['id'] === initialState[i+1][id]){
-    //     initialState[i][price] += [initialState[i+1]]
-
-    //   }
-    // }
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -108,7 +93,7 @@ class CommunityInfo extends Component {
             // {price.price}
             // </p>
             <p key={name}>
-              {name.name}: Average House Price{this.returnSpecificPrice(name.id)}
+              {name.name}: Average House Price :{this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
               {/* {price.price} */}
             </p>
