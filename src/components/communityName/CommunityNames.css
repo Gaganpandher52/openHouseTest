@@ -2,16 +2,15 @@
 .name-items p{
   font-size: 20px;
   font-style: italic;
-  
-  
-
+  text-align: center;
 }
 .name-items img{
   /* height: 20px; */
   width: 50%;
   align-items: center;
   display: flex;
-  /* margin-left: 80px; */
+  margin-left: 80px;
+
     
   /* display: inline; */
   height: 100px;
@@ -21,10 +20,10 @@
 
 @media (min-width:430px){
   .name-items p{
-    font-size: 10px;
+    font-size: 15px;
     /* display: flex; */
     float: left;
-    text-align: center;
+    /* text-align: center; */
     width:30%;
     margin-right: 1%;
     margin-bottom: 0.5em
@@ -34,6 +33,7 @@
     /* height: 20px; */
     width: 100%;
     height: 200px;
+    margin-left: 5%;
     /* display: ; */
   }
   
