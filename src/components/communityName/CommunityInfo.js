@@ -75,8 +75,8 @@ class CommunityInfo extends Component {
         prices.push(i.price);
       }
     });
-    // return total of
-    return (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(0);
+    /* return the price. Uses reduce to sum the array and tofixed and else for easy readability*/
+    return ((prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
   }
 
   /*This LogicMethod does the heavy lifting.. from some if logic to returning name images and avg price  */
@@ -91,7 +91,7 @@ class CommunityInfo extends Component {
         <p className="name-items">
           {info.map(name => (
             <p key={name}>
-              {name.name}: Average House Price :
+              {name.name}: Average House Price : 
               {this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
             </p>
