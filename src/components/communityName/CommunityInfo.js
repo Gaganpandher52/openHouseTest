@@ -77,7 +77,7 @@ class CommunityInfo extends Component {
         
   }
 
-  /*This LogicMethod */
+  /*This LogicMethod does the heavy lifting.. from some if logic to returning name images and avg price  */
   logicMethod() {
     const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
     if (error) {
@@ -91,43 +91,15 @@ class CommunityInfo extends Component {
             <p key={name}>
               {name.name}: Average House Price :{this.returnSpecificPrice(name.id)}
               {<img className src={name.imgUrl}></img>}
-
             </p>
-           
           ))}
         </p>
       );
     } //else
-
-    // console.log(initialState);
   }
 
   render() {
     const { error, isLoaded, info, priceInfo } = this.state;
-
-    // if (error) {
-    //   return <div>Error: {error.message}</div>;
-    // } else if (!isLoaded) {
-    //   return <div>Loading...</div>;
-    // } else {
-    //   return (
-    //     <p className="name-items">
-    //       {info.map(name => (
-    //         // priceInfo.map(price => (
-    //           // <p key={price}>
-    //             // {price.price}
-    //           // </p>
-    //         <p key={name}>
-    //           {name.name}
-    //           {<img className src={name.imgUrl}></img>}
-    //           {/* {price.price} */}
-
-    //         </p>
-    //       // ))//nested map
-    //       ))}
-    //     </p>
-    //   );
-    // } //else
     return <div>{this.logicMethod()}</div>;
   } //render
 } //component
