@@ -5,7 +5,7 @@ import axios from "axios";
 class CommunityInfo extends Component {
   constructor() {
     super();
-    //intitial state 
+    //intitial state
     this.state = {
       error: null,
       isLoaded: false,
@@ -50,18 +50,9 @@ class CommunityInfo extends Component {
     });
   } //componentDidMount
 
-
-   /*This LogicMethod */
-  logicMethod() {
-    const { info, priceInfo, avgPrice,error,isLoaded } = this.state;
+  returnSpecificPrice(incoming){
+    const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
     let initialState = [];
-    // for (let i in info) {
-    //   for (let j in priceInfo) {
-    //     if (info[i]["id"] === priceInfo[j]["communityId"]) {
-    //     }
-    //   }
-    // }
-    //this piece of code compare the state data and pushes it to an array 
     info.forEach(e1 =>
       priceInfo.forEach(e2 => {
         if (e1.id === e2.communityId) {
@@ -72,6 +63,32 @@ class CommunityInfo extends Component {
         } //if
       })
     );
+
+    
+
+  }
+
+  /*This LogicMethod */
+  logicMethod() {
+    const { info, priceInfo, avgPrice, error, isLoaded } = this.state;
+    // let initialState = [];
+    // // for (let i in info) {
+    // //   for (let j in priceInfo) {
+    // //     if (info[i]["id"] === priceInfo[j]["communityId"]) {
+    // //     }
+    // //   }
+    // // }
+    // //this piece of code compare the state data and pushes it to an array
+    // info.forEach(e1 =>
+    //   priceInfo.forEach(e2 => {
+    //     if (e1.id === e2.communityId) {
+    //       initialState.push({
+    //         id: e1.id,
+    //         price: [e2.price]
+    //       });
+    //     } //if
+    //   })
+    // );
     // for(let i=0;i<initialState.length;i++){
     //   if(initialState[i]['id'] === initialState[i+1][id]){
     //     initialState[i][price] += [initialState[i+1]]
@@ -79,30 +96,29 @@ class CommunityInfo extends Component {
     //   }
     // }
     if (error) {
-        return <div>Error: {error.message}</div>;
-      } else if (!isLoaded) {
-        return <div>Loading...</div>;
-      } else {
-        return (
-          <p className="name-items">
-            {info.map(name => (
-              // priceInfo.map(price => (
-                // <p key={price}>
-                  // {price.price}
-                // </p>
-              <p key={name}>
-                {name.name}
-                {<img className src={name.imgUrl}></img>}
-                {/* {price.price} */}
-  
-              </p>
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <p className="name-items">
+          {info.map(name => (
+            // priceInfo.map(price => (
+            // <p key={price}>
+            // {price.price}
+            // </p>
+            <p key={name}>
+              {name.name}: Average House Price{this.returnSpecificPrice(name.id)}
+              {<img className src={name.imgUrl}></img>}
+              {/* {price.price} */}
+            </p>
             // ))//nested map
-            ))}
-          </p>
-        );
-      } //else
+          ))}
+        </p>
+      );
+    } //else
 
-    console.log(initialState);
+    // console.log(initialState);
   }
 
   render() {
